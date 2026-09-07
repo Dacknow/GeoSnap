@@ -66,5 +66,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCameraUsageDescription</key> 
+	<string>Esta app necesita la cámara para tomar fotos georreferenciadas.</string> 
+	<key>NSLocationWhenInUseUsageDescription</key> 
+	<string>Esta app necesita tu ubicación para georreferenciar tus fotos.</string>
 </dict>
 </plist>
