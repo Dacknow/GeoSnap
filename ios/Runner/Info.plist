@@ -70,5 +70,7 @@
 	<string>Esta app necesita la cámara para tomar fotos georreferenciadas.</string> 
 	<key>NSLocationWhenInUseUsageDescription</key> 
 	<string>Esta app necesita tu ubicación para georreferenciar tus fotos.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key> 
+	<string>Esta app necesita guardar tus fotos georreferenciadas en la galería.</string>
 </dict>
 </plist>
