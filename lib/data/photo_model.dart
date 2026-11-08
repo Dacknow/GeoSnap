@@ -1,4 +1,5 @@
 class PhotoModel {
+  final int? id; // null mientras la foto aún no se ha guardado en la BD
   final String filePath;
   final double latitude;
   final double longitude;
@@ -6,6 +7,7 @@ class PhotoModel {
   final DateTime takenAt;
 
   PhotoModel({
+    this.id,
     required this.filePath,
     required this.latitude,
     required this.longitude,
@@ -15,6 +17,9 @@ class PhotoModel {
 
   Map<String, dynamic> toMap() {
     return {
+      // "if" dentro de un mapa literal: solo incluye la clave 'id' si no es
+      // null. Al insertar, dejamos que SQLite genere el id (AUTOINCREMENT).
+      if (id != null) 'id': id,
       'filePath': filePath,
       'latitude': latitude,
       'longitude': longitude,
@@ -25,6 +30,7 @@ class PhotoModel {
 
   factory PhotoModel.fromMap(Map<String, dynamic> map) {
     return PhotoModel(
+      id: map['id'] as int?,
       filePath: map['filePath'] as String,
       latitude: map['latitude'] as double,
       longitude: map['longitude'] as double,
