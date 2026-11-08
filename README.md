@@ -74,7 +74,7 @@ El proyecto nació como **proyecto integrador del curso de Paradigmas de Program
 
 | Cámara | Foto resultante | Galería |
 | :---: | :---: | :---: |
-| <img src="docs/screenshots/camara.jpg" width="220" alt="Pantalla de cámara"> | <img src="docs/screenshots/foto.jpg" width="220" alt="Foto con marca de agua"> | <img src="docs/screenshots/galeria.jpg" width="220" alt="Galería de fotos"> |
+| <img src="docs/screenshots/camara.jpeg" width="220" alt="Pantalla de cámara"> | <img src="docs/screenshots/foto.jpeg" width="220" alt="Foto con marca de agua"> | <img src="docs/screenshots/galeria.jpeg" width="220" alt="Galería de fotos"> |
 
 ## Arquitectura y paradigmas
 
@@ -82,17 +82,17 @@ La aplicación se organiza en **cuatro capas**. Cada una usa el paradigma que me
 
 ```mermaid
 flowchart LR
-    A["ui/<br/>Interfaz<br/>(OOP: widgets)"] --> B["state/<br/>Estado y eventos<br/>(reactivo)"]
+    A["ui/<br/>Interfaz<br/>(OOP: widgets)"] --> B["state/<br/>Estado y eventos<br/>(reactivo o funcional)"]
     B --> C["core/<br/>Composición de imagen<br/>(funcional)"]
-    B --> D["data/<br/>Persistencia<br/>(OOP: repositorio)"]
+    B --> D["data/<br/>Persistencia<br/>(OOP: repositorio y Declarativo)"]
 ```
 
 | Capa | Paradigma | Responsabilidad | Por qué ese paradigma |
 | --- | --- | --- | --- |
 | `ui/` | Orientado a objetos | Pantallas y widgets de Flutter | El framework modela la interfaz como un árbol de objetos que se componen. |
-| `state/` | Reactivo | Flujo de posición GPS y ciclo de vida de la cámara | GPS y cámara son fuentes de eventos asíncronos; un `Stream` los expresa de forma natural y la interfaz se redibuja sola cuando cambian. |
+| `state/` | Reactivo o funcional | Flujo de posición GPS y ciclo de vida de la cámara | GPS y cámara son fuentes de eventos asíncronos; un `Stream` los expresa de forma natural y la interfaz se redibuja sola cuando cambian. |
 | `core/` | Funcional | `composeWatermark`: foto + datos → foto nueva | Una función pura es fácil de razonar y de probar en aislamiento: mismas entradas, mismo resultado, sin efectos secundarios. |
-| `data/` | Orientado a objetos | `PhotoRepository` y `PhotoModel` | El repositorio encapsula el acceso a SQLite; el resto de la app nunca habla con la base de datos directamente. |
+| `data/` | Orientado a objetos y Declarativo | `PhotoRepository` y `PhotoModel` | El repositorio encapsula el acceso a SQLite; el resto de la app nunca habla con la base de datos directamente. |
 
 ### Función pura de composición
 
@@ -378,7 +378,7 @@ Proyecto integrador del curso **Paradigmas de Programación**.
 
 **Objetivo general:** diseñar e implementar una aplicación móvil multiplataforma, libre de publicidad, que permita georreferenciar fotografías mediante marca de agua digital, aplicando un enfoque multiparadigma (orientado a objetos, funcional y reactivo).
 
-El planteamiento completo del problema (justificación, delimitación, viabilidad y componentes tecnológicos) está en [`docs/Proyecto_Integrador_Problema_Investigacion.docx`](docs/Proyecto_Integrador_Problema_Investigacion.docx).
+El planteamiento completo del problema (justificación, delimitación, viabilidad y componentes tecnológicos) está en [`docs/Proyecto_Integrador_Problema_Investigacion.pdf`](docs/Proyecto_Integrador_Problema_Investigacion.pdf).
 
 ## Autores
 

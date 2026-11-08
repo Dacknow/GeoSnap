@@ -31,7 +31,8 @@ class CaptureScreen extends StatefulWidget {
 
 class _CaptureScreenState extends State<CaptureScreen> {
   bool _isSaving = false;
-  String? _lastPhotoPath; // ruta de la última foto, para la miniatura del footer
+  String?
+  _lastPhotoPath; // ruta de la última foto, para la miniatura del footer
 
   @override
   void initState() {
@@ -53,9 +54,8 @@ class _CaptureScreenState extends State<CaptureScreen> {
   }
 
   Future<void> _openGallery() async {
-    await Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => const GalleryScreen()),
-    );
+    await Navigator.of(context)
+        .push(MaterialPageRoute(builder: (_) => const GalleryScreen()));
     if (!mounted) return;
     _loadLastPhoto(); // por si se eliminó alguna foto en la galería
   }
@@ -91,9 +91,11 @@ class _CaptureScreenState extends State<CaptureScreen> {
         );
         if (placemarks.isNotEmpty) {
           final p = placemarks.first;
-          cityLine = [p.locality, p.administrativeArea, p.country]
-              .where((s) => s != null && s.isNotEmpty)
-              .join(', ');
+          cityLine = [
+            p.locality,
+            p.administrativeArea,
+            p.country,
+          ].where((s) => s != null && s.isNotEmpty).join(', ');
 
           // Evitamos duplicados: solo agregamos barrio y código postal
           // si el texto de "street" no los incluye ya.
@@ -128,6 +130,7 @@ class _CaptureScreenState extends State<CaptureScreen> {
         // Sin mapa: el compositor usa el pin simple de respaldo.
       }
 
+      final logoData = await rootBundle.load('assets/images/logo.png');
       final watermarkedBytes = composeWatermark(
         originalPhotoBytes: _toUint8List(rawBytes),
         latitude: position.latitude,
@@ -135,6 +138,10 @@ class _CaptureScreenState extends State<CaptureScreen> {
         cityLine: cityLine,
         addressLine: addressLine,
         takenAt: takenAt,
+        appLogoBytes: logoData.buffer.asUint8List(
+          logoData.offsetInBytes,
+          logoData.lengthInBytes,
+        ),
         mapThumbnailBytes: mapThumbnail,
       );
 
@@ -264,7 +271,7 @@ class _CaptureScreenState extends State<CaptureScreen> {
         final position = locationProvider.currentPosition;
         final coordsText = position != null
             ? 'Lat: ${position.latitude.toStringAsFixed(6)}\n'
-                'Lon: ${position.longitude.toStringAsFixed(6)}'
+                  'Lon: ${position.longitude.toStringAsFixed(6)}'
             : (locationProvider.errorMessage ?? 'Buscando ubicación...');
 
         // CameraPreview ya trae su propia relación de aspecto; el Center

@@ -24,8 +24,9 @@ Uint8List composeWatermark({
   required String cityLine,
   required String addressLine,
   required DateTime takenAt,
+  required Uint8List appLogoBytes,
   Uint8List? mapThumbnailBytes, // El "?" indica que puede ser null (opcional).
-  String appName = 'GPS Map Camera',
+  String appName = 'GeoSnap',
 }) {
   // decodeImage() lee los bytes crudos (JPEG/PNG) y los convierte en
   // una estructura de píxeles que sí podemos manipular. Puede fallar
@@ -33,6 +34,10 @@ Uint8List composeWatermark({
   final original = img.decodeImage(originalPhotoBytes);
   if (original == null) {
     throw ArgumentError('No se pudo decodificar la imagen recibida.');
+  }
+  final appLogo = img.decodeImage(appLogoBytes);
+  if (appLogo == null) {
+    throw ArgumentError('No se pudo decodificar el logo de la aplicación.');
   }
 
   // Image.from() crea una COPIA. Es importante no modificar "original"
@@ -210,18 +215,23 @@ Uint8List composeWatermark({
     radius: h * 0.01,
   );
 
-  _drawSimplePin(
+  final logoSize = (labelHeight * 0.82).round();
+  final resizedLogo = img.copyResize(
+    appLogo,
+    width: logoSize,
+    height: logoSize,
+  );
+  img.compositeImage(
     photo,
-    labelLeft + (labelHeight * 0.55).round(),
-    labelTop + (labelHeight * 0.5).round(),
-    labelHeight * 0.28,
-    img.ColorRgb8(255, 255, 255),
+    resizedLogo,
+    dstX: labelLeft + (labelHeight * 0.12).round(),
+    dstY: labelTop + (labelHeight - logoSize) ~/ 2,
   );
   img.drawString(
     photo,
     appName,
     font: img.arial14,
-    x: labelLeft + (labelHeight * 1.1).round(),
+    x: labelLeft + (labelHeight * 1.05).round(),
     y: labelTop + (labelHeight * 0.2).round(),
     color: img.ColorRgb8(255, 255, 255),
   );
